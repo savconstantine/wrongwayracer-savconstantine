@@ -1,9 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import Root from './config/root'
 
-import './assets/scss/main.scss'
-
-const target = document.getElementById('root')
-
-ReactDOM.render(<Root />, target)
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render(
+  <React.StrictMode>
+    <Root />
+  </React.StrictMode>
+)
