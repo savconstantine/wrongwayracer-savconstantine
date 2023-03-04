@@ -10,6 +10,7 @@ import DummyView from '../components/dummy-view'
 import NotFound from '../components/404'
 
 import Startup from './startup'
+import pixiTest from '../components/pixi-test'
 
 const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
   const user = useSelector((state) => state.auth.user)
@@ -50,6 +51,7 @@ const RootComponent = (props) => {
           <Switch>
             <Route exact path="/" component={DummyView} />
             <Route exact path="/dashboard" component={Home} />
+            <Route exact path="/pixi-test" component={pixiTest} />
             <PrivateRoute exact path="/hidden-route" component={DummyView} />
             <OnlyAnonymousRoute exact path="/anonymous-route" component={DummyView} />
 
