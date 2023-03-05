@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { BlurFilter } from 'pixi.js'
-import { Stage, Container, Sprite, Text } from '@pixi/react'
+import { Stage, Container, Sprite, Text } from '@inlet/react-pixi'
 import socketIO from 'socket.io-client'
 
 const socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
