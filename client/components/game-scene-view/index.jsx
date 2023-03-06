@@ -3,6 +3,8 @@ import { BlurFilter } from 'pixi.js'
 import { Stage, Container, Sprite, Text, Graphics } from '@inlet/react-pixi' // eslint-disable-line no-unused-vars
 import socketIO from 'socket.io-client'
 
+import Background from './background'
+
 const socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
 // eslint-disable-file no-use-before-define
 // import Head from './head'
@@ -41,46 +43,7 @@ const GameSceneView = () => {
       </div>
 
       <Stage width={1120} height={649}>
-        <Sprite
-          image="images/sky.png"
-          x={1120 / 2}
-          y={649 / 2}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.28}
-        />
-        <Sprite
-          image="images/mountain_fade.png"
-          x={1120 / 2}
-          y={649 / 2 + 50}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.42}
-        />
-
-        <Sprite
-          image="images/road.png"
-          x={1120 / 2}
-          y={649 - 110}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.28}
-        />
-
-        <Sprite
-          image="images/mountain_fade.png"
-          x={1120 / 2}
-          y={649 / 2 + 70}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.3}
-          filters={[blurFilterMountainFade]}
-        />
-
-        <Sprite
-          image="images/mountain_fade.png"
-          x={1120 / 2}
-          y={649 / 2 + 70}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.3}
-          filters={[blurFilterMountainFade]}
-        />
+        <Background />
 
         <Sprite
           image="images/mountain_right.png"
