@@ -59,13 +59,13 @@ const SideroadLeft = () => {
   const sideRoadLeftItems = [
     {
       image: 'images/mountain_left.png',
-      initX: stageWidth / 2 - 50,
+      initX: stageWidth / 2 - 80,
       initY: stageHeight / 2 + 50,
-      vx: -18,
-      vy: 0.5,
+      vx: -50,
+      vy: 0.4,
       vscale: 0.0005,
       vscaleModifier: 0.011,
-      vspeed: 0.02,
+      vspeed: 0.01,
       vspeedModifier: 0.001,
       resetPositionXCondition: -300
     },
@@ -73,11 +73,11 @@ const SideroadLeft = () => {
       image: 'images/sideroad_left.png',
       initX: stageWidth / 2 - 100,
       initY: stageHeight / 2 + 50,
-      vx: -9,
+      vx: -10,
       vy: 2,
-      vscale: 0.0005,
-      vspeed: 0.1,
-      vspeedModifier: 1,
+      vscale: 0.0004,
+      vspeed: 0.09,
+      vspeedModifier: 0.003,
       resetPositionXCondition: -1000
     }
   ]
@@ -93,7 +93,10 @@ const SideroadLeft = () => {
           vx={item.vx}
           vy={item.vy}
           vscale={item.vscale}
+          vscaleModifier={item.vscaleModifier}
           vspeed={item.vspeed}
+          vspeedModifier={item.vspeedModifier}
+          resetPositionXCondition={item.resetPositionXCondition}
         />
       ))}
     </Container>
