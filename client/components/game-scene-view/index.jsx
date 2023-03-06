@@ -1,9 +1,10 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { BlurFilter } from 'pixi.js'
-import { Stage, Container, Sprite, Text, Graphics } from '@inlet/react-pixi' // eslint-disable-line no-unused-vars
+import { Stage, Container, Sprite, Text } from '@inlet/react-pixi'
 import socketIO from 'socket.io-client'
 
 import Background from './background'
+import Car from './car'
 
 const socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
 // eslint-disable-file no-use-before-define
