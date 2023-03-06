@@ -1,10 +1,8 @@
 import React, { useRef, useEffect } from 'react'
-import { Sprite, useTick } from '@inlet/react-pixi'
+import { Container, Sprite, useTick } from '@inlet/react-pixi'
 
 const stageWidth = 1120
 const stageHeight = 649
-
-const speed = 1
 
 const SpriteAnimation = ({
   image,
@@ -31,7 +29,7 @@ const SpriteAnimation = ({
     sprite.vy = vy
     sprite.vscale = vscale
     sprite.vspeed = vspeed
-  }, [])
+  }, [image, initX, initY, vx, vy, vscale, vspeed])
 
   // Define the animation loop using the useTick hook
   useTick((delta) => {
@@ -63,13 +61,13 @@ const SideroadLeft = () => {
       image: 'images/mountain_left.png',
       initX: stageWidth / 2 - 50,
       initY: stageHeight / 2 + 50,
-      vx: -17,
-      vy: 2,
+      vx: -18,
+      vy: 0.5,
       vscale: 0.0005,
-      vscaleModifier: 0.001,
-      vspeed: 0.09 * speed,
+      vscaleModifier: 0.011,
+      vspeed: 0.02,
       vspeedModifier: 0.001,
-      resetPositionXCondition: -400
+      resetPositionXCondition: -300
     },
     {
       image: 'images/sideroad_left.png',
@@ -78,14 +76,14 @@ const SideroadLeft = () => {
       vx: -9,
       vy: 2,
       vscale: 0.0005,
-      vspeed: 0.1 * speed,
+      vspeed: 0.1,
       vspeedModifier: 1,
       resetPositionXCondition: -1000
     }
   ]
 
   return (
-    <>
+    <Container x={0} y={0}>
       {sideRoadLeftItems.map((item) => (
         <SpriteAnimation
           key={item.image}
@@ -98,7 +96,7 @@ const SideroadLeft = () => {
           vspeed={item.vspeed}
         />
       ))}
-    </>
+    </Container>
   )
 }
 
