@@ -5,6 +5,7 @@ import socketIO from 'socket.io-client'
 
 import Background from './background'
 import Car from './car'
+import SideroadLeft from './sideroad-left'
 
 const socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
 // eslint-disable-file no-use-before-define
@@ -62,21 +63,8 @@ const GameSceneView = () => {
           scale={0.18}
         />
 
-        <Sprite
-          image="images/mountain_left.png"
-          x={1120 / 2 - 350}
-          y={649 / 2}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.2}
-        />
+        <SideroadLeft />
 
-        <Sprite
-          image="images/sideroad_left.png"
-          x={1120 / 2 - 350}
-          y={649 / 2 + 100}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.15}
-        />
         <Sprite
           image="images/cars/enemy_right.png"
           x={1120 / 2 + 300}
