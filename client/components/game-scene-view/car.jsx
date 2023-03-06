@@ -62,7 +62,7 @@ const Car = () => {
       sprite.x = centerCarPositionX
     }
 
-    sprite.y = carPositionY
+    sprite.y = carPositionY + Math.floor(Math.random() * 4) - 2
 
     if (sprite.x < leftCarPositionXshowTexture) {
       setTexture('left')
