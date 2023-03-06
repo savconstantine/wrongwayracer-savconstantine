@@ -1,12 +1,13 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { BlurFilter } from 'pixi.js'
-import { Stage, Container, Sprite, Text } from '@inlet/react-pixi'
+import { Stage, Sprite } from '@inlet/react-pixi'
 import socketIO from 'socket.io-client'
 
 import Background from './background'
 import Fade from './fade'
 import Car from './car'
 import SideroadLeft from './sideroad-left'
+import SideroadRight from './sideroad-right'
 
 const socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
 // eslint-disable-file no-use-before-define
@@ -27,10 +28,10 @@ const GameSceneView = () => {
       setIsConnected(false)
     })
 
-    socket.onAny((eventName, ...args) => {
-      // eslint-disable-next-line no-console
-      console.log(eventName, args)
-    })
+    // socket.onAny((eventName, ...args) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log(eventName, args)
+    // })
 
     return () => {
       socket.off('connect')
@@ -44,26 +45,10 @@ const GameSceneView = () => {
       <div>
         <p>Connected: {`${isConnected}`}</p>
       </div>
-
       <Stage width={1120} height={649}>
         <Background />
 
-        <Sprite
-          image="images/mountain_right.png"
-          x={1120 / 2 + 300}
-          y={649 / 2}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.18}
-        />
-
-        <Sprite
-          image="images/sideroad_right.png"
-          x={1120 / 2 + 300}
-          y={649 / 2 + 130}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.18}
-        />
-
+        <SideroadRight />
         <SideroadLeft />
 
         <Sprite
@@ -76,17 +61,6 @@ const GameSceneView = () => {
         />
         <Fade />
         <Car />
-
-        <Sprite
-          image="https://pixijs.io/pixi-react/img/bunny.png"
-          x={400}
-          y={270}
-          anchor={{ x: 0.5, y: 0.5 }}
-        />
-
-        <Container x={400} y={330}>
-          <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} filters={[blurFilter]} />
-        </Container>
       </Stage>
     </>
   )
