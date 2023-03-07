@@ -7,6 +7,7 @@ import Root from './config/root'
 import './assets/scss/main.scss'
 
 const app = new PIXI.Application()
+globalThis.__PIXI_APP__ = app // eslint-disable-line no-underscore-dangle
 
 const target = document.getElementById('root')
 
