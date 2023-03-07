@@ -9,7 +9,7 @@ const initY = stageHeight / 2 + 50
 const initVscale = 0.01
 const initVspeed = 0.003
 
-const Enemy = ({ updateEnemy, enemy }) => {
+const Enemy = ({ updateEnemy, enemy, gameOver }) => {
   const [texture, setTexture] = useState('center')
   const spriteRef = useRef()
 
@@ -29,6 +29,7 @@ const Enemy = ({ updateEnemy, enemy }) => {
     sprite.vscale = initVscale
     sprite.vspeed = initVspeed
     sprite.scale.set(0)
+    sprite.alpha = 1
   }, [])
 
   const speed = 1
@@ -40,6 +41,11 @@ const Enemy = ({ updateEnemy, enemy }) => {
   function update() {
     if (enemy.isActive) {
       const sprite = spriteRef.current
+      if (gameOver) {
+        if (sprite.alpha > 0) sprite.alpha -= 0.05
+
+        return
+      }
       if (enemy.direction === 'left') {
         setTexture('left')
         sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed)

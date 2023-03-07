@@ -14,7 +14,8 @@ const SpriteAnimation = ({
   vscaleModifier = 0.003,
   vspeed,
   vspeedModifier = 0.001,
-  resetPositionXCondition = -900
+  resetPositionXCondition = -900,
+  gameOver
 }) => {
   const spriteRef = useRef(null)
 
@@ -33,6 +34,7 @@ const SpriteAnimation = ({
 
   // Define the animation loop using the useTick hook
   useTick(() => {
+    if (gameOver) return
     const sprite = spriteRef.current
 
     // Move the sprite by its velocity
@@ -55,7 +57,7 @@ const SpriteAnimation = ({
   return <Sprite ref={spriteRef} image={image} anchor={{ x: 0.5, y: 0.5 }} />
 }
 
-const SideroadRight = () => {
+const SideroadRight = ({ gameOver }) => {
   const SideroadRightItems = [
     {
       image: 'images/mountain_right.png',
@@ -98,6 +100,7 @@ const SideroadRight = () => {
           vspeed={item.vspeed}
           vspeedModifier={item.vspeedModifier}
           resetPositionXCondition={item.resetPositionXCondition}
+          gameOver={gameOver}
         />
       ))}
     </Container>

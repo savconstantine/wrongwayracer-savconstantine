@@ -11,7 +11,7 @@ const rightCarPositionXshowTexture = 1120 / 2 + 150
 
 let additionalDirection = 'center'
 
-const Car = () => {
+const Car = ({ setCarPosition, gameOver }) => {
   const [texture, setTexture] = useState('center')
   const [moveDirection, setMoveDirection] = useState('')
   const spriteRef = useRef()
@@ -47,6 +47,11 @@ const Car = () => {
 
   function update() {
     const sprite = spriteRef.current
+    if (gameOver) {
+      if (sprite.alpha > 0) sprite.alpha -= 0.05
+
+      return
+    }
     if (moveDirection === 'left') {
       sprite.x -= direction.x * speed
     } else if (moveDirection === 'right') {
@@ -71,10 +76,13 @@ const Car = () => {
 
     if (sprite.x < leftCarPositionXshowTexture) {
       setTexture('left')
+      setCarPosition('left')
     } else if (sprite.x > rightCarPositionXshowTexture) {
       setTexture('right')
+      setCarPosition('right')
     } else {
       setTexture('center')
+      setCarPosition('center')
     }
   }
 
