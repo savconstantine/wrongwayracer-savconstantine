@@ -13,7 +13,7 @@ import { purple } from '@mui/material/colors'
 import SettingsIcon from '@mui/icons-material/Settings'
 
 const boxStyles = {
-  width: '100%',
+  width: 315,
   height: 286,
   background: 'rgba(16, 12, 74, 0.2)',
   borderRadius: '12px',
