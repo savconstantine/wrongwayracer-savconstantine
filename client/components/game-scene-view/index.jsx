@@ -19,6 +19,8 @@ const stageWidth = 1120
 const stageHeight = 649
 const radius = 20
 
+const centerPositionExplosion = stageWidth / 2 + 200
+
 const GameSceneView = () => {
   const enemy = useSelector((state) => state.data.enemy)
   const [carPosition, setCarPosition] = useState('center') // eslint-disable-line no-unused-vars
@@ -27,6 +29,7 @@ const GameSceneView = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [frames, setFrames] = useState([]) // eslint-disable-line no-unused-vars
   const [gameOver, setGameOver] = useState(false) // eslint-disable-line no-unused-vars
+  const [explosionPositionX, setExplosionPositionX] = useState(centerPositionExplosion) // eslint-disable-line no-unused-vars
 
   const dispatch = useDispatch()
 
@@ -36,6 +39,19 @@ const GameSceneView = () => {
 
   useEffect(() => {
     if (enemy.direction === carPosition && enemy.y > 500 && enemy.y < 650) {
+      switch (carPosition) {
+        case 'left':
+          setExplosionPositionX(centerPositionExplosion - 250)
+          break
+        case 'center':
+          setExplosionPositionX(centerPositionExplosion)
+          break
+        case 'right':
+          setExplosionPositionX(centerPositionExplosion + 250)
+          break
+        default:
+          break
+      }
       setIsPlaying(true)
       setGameOver(true)
     }
@@ -85,7 +101,7 @@ const GameSceneView = () => {
         <Car setCarPosition={setCarPosition} gameOver={gameOver} />
 
         {isPlaying && (
-          <Container position={[500, 250]} anchor={0.5}>
+          <Container position={[explosionPositionX, 280]} anchor={0.5}>
             <AnimatedSprite
               animationSpeed={0.3}
               isPlaying={isPlaying}
