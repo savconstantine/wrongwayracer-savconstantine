@@ -23,13 +23,13 @@ const centerPositionExplosion = stageWidth / 2 + 200
 
 const GameSceneView = () => {
   const enemy = useSelector((state) => state.data.enemy)
-  const [carPosition, setCarPosition] = useState('center') // eslint-disable-line no-unused-vars
+  const [carPosition, setCarPosition] = useState('center')
 
   const [currentFrame, setCurrentFrame] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [frames, setFrames] = useState([]) // eslint-disable-line no-unused-vars
-  const [gameOver, setGameOver] = useState(false) // eslint-disable-line no-unused-vars
-  const [explosionPositionX, setExplosionPositionX] = useState(centerPositionExplosion) // eslint-disable-line no-unused-vars
+  const [frames, setFrames] = useState([])
+  const [gameOver, setGameOver] = useState(false)
+  const [explosionPositionX, setExplosionPositionX] = useState(centerPositionExplosion)
 
   const dispatch = useDispatch()
 

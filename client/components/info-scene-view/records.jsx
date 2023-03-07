@@ -116,7 +116,7 @@ const tableCellRankStyles = {
 }
 
 const Records = () => {
-  const { records } = useSelector((state) => state.data) // eslint-disable-line no-unused-vars
+  const { records } = useSelector((state) => state.data) 
   return (
     <Box sx={boxStyles}>
       <Box sx={headerStyles}>
