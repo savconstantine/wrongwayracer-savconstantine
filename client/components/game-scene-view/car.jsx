@@ -52,6 +52,9 @@ const Car = ({ setCarPosition, gameOver }) => {
 
       return
     }
+
+    if (sprite.alpha < 1) sprite.alpha += 0.05
+
     if (moveDirection === 'left') {
       sprite.x -= direction.x * speed
     } else if (moveDirection === 'right') {

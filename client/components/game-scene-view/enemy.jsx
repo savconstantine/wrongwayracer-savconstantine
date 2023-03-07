@@ -46,6 +46,7 @@ const Enemy = ({ updateEnemy, enemy, gameOver }) => {
 
         return
       }
+      if (sprite.alpha < 1) sprite.alpha += 0.05
       if (enemy.direction === 'left') {
         setTexture('left')
         sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed)

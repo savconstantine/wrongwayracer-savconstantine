@@ -54,6 +54,11 @@ const GameSceneView = () => {
       }
       setIsPlaying(true)
       setGameOver(true)
+      setTimeout(() => {
+        updateEnemy({ isActive: false, direction: 'center', x: 0, y: 0 })
+        setGameOver(false)
+        setIsPlaying(false)
+      }, 5000)
     }
   }, [enemy])
 
