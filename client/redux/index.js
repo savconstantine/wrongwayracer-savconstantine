@@ -2,15 +2,12 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import SockJS from 'sockjs-client'
+import socketIO from 'socket.io-client'
 
 import rootReducer from './reducers'
 import createHistory from './history'
-import socketActions from './sockets'
 
 export const history = createHistory()
-
-const isBrowser = typeof window !== 'undefined'
 
 const initialState = {}
 const enhancers = []
@@ -22,28 +19,50 @@ const composedEnhancers = composeFunc(applyMiddleware(...middleware), ...enhance
 
 const store = createStore(rootReducer(history), initialState, composedEnhancers)
 let socket
+const ENABLE_SOCKETS = 'true'
 
 if (typeof ENABLE_SOCKETS !== 'undefined' && ENABLE_SOCKETS === 'true') {
   const initSocket = () => {
-    socket = new SockJS(`${isBrowser ? window.location.origin : 'http://localhost'}/ws`)
+    socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
+    socket.on('connect', () => {
+      console.log('connect')
+    })
 
-    socket.onopen = () => {
-      store.dispatch(socketActions.connected)
-    }
+    socket.on('disconnect', () => {
+      console.log('disconnect')
+    })
 
-    socket.onmessage = (message) => {
+    socket.onAny((eventName, ...args) => {
       // eslint-disable-next-line no-console
-      console.log(message)
+      console.log(eventName, args)
+    })
 
-      // socket.close();
-    }
+    socket.on('newChat', (data) => {
+      store.dispatch({
+        type: 'SET_CHAT',
+        payload: data
+      })
+    })
 
-    socket.onclose = () => {
-      store.dispatch(socketActions.disconnected)
-      setTimeout(() => {
-        initSocket()
-      }, 2000)
-    }
+    socket.on('players', (data) => {
+      store.dispatch({
+        type: 'SET_PLAYERS',
+        payload: data
+      })
+    })
+
+    socket.on('newEnemy', (data) => {
+      const enemy = {
+        isActive: true,
+        direction: data,
+        x: 0,
+        y: 0
+      }
+      store.dispatch({
+        type: 'SET_ENEMY',
+        payload: enemy
+      })
+    })
   }
 
   initSocket()
