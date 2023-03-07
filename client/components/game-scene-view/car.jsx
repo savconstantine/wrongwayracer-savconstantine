@@ -22,6 +22,11 @@ const Car = () => {
     right: 'images/cars/car_right.png'
   }
 
+  useEffect(() => {
+    const sprite = spriteRef.current
+    sprite.x = centerCarPositionX
+  }, [])
+
   const changeAdditionalDirection = (newDirection) => {
     if (newDirection === 'left' && additionalDirection === 'center') {
       additionalDirection = 'left'
