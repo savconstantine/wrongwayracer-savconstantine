@@ -5,16 +5,21 @@ import Records from './records'
 import Chat from './chat'
 import Players from './players'
 
+const gridStyles = {
+  display: 'flex',
+  justifyContent: 'space-between'
+}
+
 const InfoSceneView = () => {
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={4}>
+    <Grid container spacing={2} xs={gridStyles}>
+      <Grid item xs="auto">
         <Records />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={5}>
         <Chat />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs="auto">
         <Players />
       </Grid>
     </Grid>
