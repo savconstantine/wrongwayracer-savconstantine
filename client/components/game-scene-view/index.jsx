@@ -1,68 +1,41 @@
-import React, { useMemo, useEffect, useState } from 'react'
+import React, { useMemo } from 'react'
 import { BlurFilter } from 'pixi.js'
-import { Stage, Sprite } from '@inlet/react-pixi'
-import socketIO from 'socket.io-client'
+import { Stage } from '@inlet/react-pixi'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Background from './background'
 import Fade from './fade'
 import Car from './car'
+import Enemy from './enemy'
 import SideroadLeft from './sideroad-left'
 import SideroadRight from './sideroad-right'
 
-const socket = socketIO.connect('wss://wrongway-racer-api.spls.ae/')
-// eslint-disable-file no-use-before-define
-// import Head from './head'
+import { setEnemy } from '../../redux/reducers/data'
 
 const GameSceneView = () => {
+  const enemy = useSelector((state) => state.data.enemy)
   const blurFilter = useMemo(() => new BlurFilter(4), []) // eslint-disable-line no-unused-vars
   const blurFilterMountainFade = useMemo(() => new BlurFilter(20), []) // eslint-disable-line no-unused-vars
   const noBlur = useMemo(() => new BlurFilter(0), []) // eslint-disable-line no-unused-vars
-  const [isConnected, setIsConnected] = useState(socket.connected)
 
-  useEffect(() => {
-    socket.on('connect', () => {
-      setIsConnected(true)
-    })
+  const dispatch = useDispatch()
 
-    socket.on('disconnect', () => {
-      setIsConnected(false)
-    })
-
-    // socket.onAny((eventName, ...args) => {
-    //   // eslint-disable-next-line no-console
-    //   console.log(eventName, args)
-    // })
-
-    return () => {
-      socket.off('connect')
-      socket.off('disconnect')
-      socket.off('pong')
-    }
-  }, [])
+  const updateEnemy = (data) => {
+    dispatch(setEnemy(data))
+  }
 
   return (
-    <>
-      <div>
-        <p>Connected: {`${isConnected}`}</p>
-      </div>
-      <Stage width={1120} height={649}>
-        <Background />
+    <Stage width={1120} height={649}>
+      <Background />
 
-        <SideroadRight />
-        <SideroadLeft />
+      <SideroadRight />
+      <SideroadLeft />
 
-        <Sprite
-          image="images/cars/enemy_right.png"
-          x={1120 / 2 + 300}
-          y={649 - 110}
-          anchor={{ x: 0.5, y: 0.5 }}
-          scale={0.8}
-          filters={[noBlur]}
-        />
-        <Fade />
-        <Car />
-      </Stage>
-    </>
+      <Enemy updateEnemy={updateEnemy} enemy={enemy} />
+
+      <Fade />
+      <Car />
+    </Stage>
   )
 }
 

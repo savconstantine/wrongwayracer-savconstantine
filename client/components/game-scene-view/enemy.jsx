@@ -1,0 +1,94 @@
+import React, { useState, useRef, useEffect } from 'react'
+import { Sprite, useTick } from '@inlet/react-pixi'
+
+const stageWidth = 1120
+const stageHeight = 649
+
+const initX = stageWidth / 2 - 25
+const initY = stageHeight / 2 + 50
+const initVscale = 0.01
+const initVspeed = 0.003
+
+const Enemy = ({ updateEnemy, enemy }) => {
+  const [texture, setTexture] = useState('center')
+  const spriteRef = useRef()
+
+  // updateEnemy(enemy)
+
+  const textures = {
+    center: 'images/cars/enemy_center.png',
+    left: 'images/cars/enemy_left.png',
+    right: 'images/cars/enemy_right.png'
+  }
+
+  useEffect(() => {
+    const sprite = spriteRef.current
+
+    sprite.x = initX
+    sprite.y = initY
+    sprite.vscale = initVscale
+    sprite.vspeed = initVspeed
+    sprite.scale.set(0)
+  }, [])
+
+  const speed = 1
+  const direction = {
+    x: 5,
+    y: 3
+  }
+
+  function update(delta) {
+    if (enemy.isActive) {
+      const sprite = spriteRef.current
+      if (enemy.direction === 'left') {
+        setTexture('left')
+        sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed) * delta
+        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed) * delta
+      } else if (enemy.direction === 'right') {
+        setTexture('right')
+        sprite.x += direction.x * (sprite.y < 450 ? speed / 2 : speed) * delta
+        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed) * delta
+      } else if (enemy.direction === 'center') {
+        setTexture('center')
+        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed) * delta
+      }
+
+      sprite.vscale = sprite.vscale >= 0.6 ? 0.6 : sprite.vscale + 0.01
+
+      sprite.scale.set(sprite.vscale * delta)
+      sprite.vspeed += sprite.vspeed * 0.03
+
+      updateEnemy({
+        isActive: true,
+        direction: enemy.direction,
+        x: sprite.x,
+        y: sprite.y
+      })
+
+      if (sprite.y > 900) {
+        // Reset the position of the sprite to the center
+        sprite.x = initX
+        sprite.y = initY
+        sprite.vscale = initVscale
+        sprite.vspeed = initVspeed
+        sprite.scale.set(0)
+        updateEnemy({
+          isActive: false,
+          direction: '',
+          x: 0,
+          y: 0
+        })
+      }
+    }
+  }
+
+  useTick((delta) => {
+    update(delta)
+  })
+
+  return <Sprite ref={spriteRef} image={textures[texture]} anchor={{ x: 0.5, y: 0.5 }} />
+}
+
+Enemy.propTypes = {}
+
+export default React.memo(Enemy)
