@@ -45,12 +45,12 @@ const Car = () => {
     y: 5
   }
 
-  function update(delta) {
+  function update() {
     const sprite = spriteRef.current
     if (moveDirection === 'left') {
-      sprite.x -= direction.x * speed * delta
+      sprite.x -= direction.x * speed
     } else if (moveDirection === 'right') {
-      sprite.x += direction.x * speed * delta
+      sprite.x += direction.x * speed
     }
 
     if (sprite.x < leftCarPositionX) sprite.x = leftCarPositionX
@@ -101,8 +101,8 @@ const Car = () => {
     }
   }, [textures.length])
 
-  useTick((delta) => {
-    update(delta)
+  useTick(() => {
+    update()
   })
 
   return (

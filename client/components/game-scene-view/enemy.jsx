@@ -37,25 +37,25 @@ const Enemy = ({ updateEnemy, enemy }) => {
     y: 3
   }
 
-  function update(delta) {
+  function update() {
     if (enemy.isActive) {
       const sprite = spriteRef.current
       if (enemy.direction === 'left') {
         setTexture('left')
-        sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed) * delta
-        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed) * delta
+        sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed)
+        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
       } else if (enemy.direction === 'right') {
         setTexture('right')
-        sprite.x += direction.x * (sprite.y < 450 ? speed / 2 : speed) * delta
-        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed) * delta
+        sprite.x += direction.x * (sprite.y < 450 ? speed / 2 : speed)
+        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
       } else if (enemy.direction === 'center') {
         setTexture('center')
-        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed) * delta
+        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
       }
 
       sprite.vscale = sprite.vscale >= 0.6 ? 0.6 : sprite.vscale + 0.01
 
-      sprite.scale.set(sprite.vscale * delta)
+      sprite.scale.set(sprite.vscale)
       sprite.vspeed += sprite.vspeed * 0.03
 
       updateEnemy({
@@ -82,8 +82,8 @@ const Enemy = ({ updateEnemy, enemy }) => {
     }
   }
 
-  useTick((delta) => {
-    update(delta)
+  useTick(() => {
+    update()
   })
 
   return <Sprite ref={spriteRef} image={textures[texture]} anchor={{ x: 0.5, y: 0.5 }} />

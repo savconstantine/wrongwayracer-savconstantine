@@ -32,14 +32,14 @@ const SpriteAnimation = ({
   }, [image, initX, initY, vx, vy, vscale, vspeed])
 
   // Define the animation loop using the useTick hook
-  useTick((delta) => {
+  useTick(() => {
     const sprite = spriteRef.current
 
     // Move the sprite by its velocity
-    sprite.x += sprite.vx * sprite.vspeed * delta
-    sprite.y += sprite.vy * sprite.vspeed * delta
+    sprite.x += sprite.vx * sprite.vspeed
+    sprite.y += sprite.vy * sprite.vspeed
     sprite.vscale += vscaleModifier
-    sprite.scale.set(sprite.vscale * sprite.vspeed * delta)
+    sprite.scale.set(sprite.vscale * sprite.vspeed)
     sprite.vspeed += sprite.vspeed * vspeedModifier
 
     if (sprite.x > resetPositionXCondition) {
