@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Stage, AnimatedSprite, Container, useApp } from '@inlet/react-pixi' // eslint-disable-line no-unused-vars
+import { Stage, AnimatedSprite, Container } from '@inlet/react-pixi'
 import * as PIXI from 'pixi.js'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -14,6 +14,10 @@ import { setEnemy } from '../../redux/reducers/data'
 
 const ticker = new PIXI.Ticker()
 ticker.maxFPS = 40
+
+const stageWidth = 1120
+const stageHeight = 649
+const radius = 20
 
 const GameSceneView = () => {
   const enemy = useSelector((state) => state.data.enemy)
@@ -57,35 +61,46 @@ const GameSceneView = () => {
     setFrames(vFrames.map((v) => new PIXI.Texture(texture.baseTexture, v.frame)))
   }, [])
 
+  const mask = new PIXI.Graphics()
+  mask.beginFill(0xffffff)
+  mask.drawRoundedRect(0, 0, stageWidth, stageHeight, radius)
+  mask.endFill()
+
   return (
-    <Stage width={1120} height={649} options={{ resolution: 2 }}>
-      <Background />
+    <Stage
+      width={stageWidth}
+      height={stageHeight}
+      options={{ transparent: true, backgroundAlpha: 0 }}
+    >
+      <Container mask={mask}>
+        <Background />
 
-      <SideroadRight gameOver={gameOver} />
-      <SideroadLeft gameOver={gameOver} />
+        <SideroadRight gameOver={gameOver} />
+        <SideroadLeft gameOver={gameOver} />
 
-      <Enemy updateEnemy={updateEnemy} enemy={enemy} gameOver={gameOver} />
+        <Enemy updateEnemy={updateEnemy} enemy={enemy} gameOver={gameOver} />
 
-      <Fade />
+        <Fade />
 
-      <Car setCarPosition={setCarPosition} gameOver={gameOver} />
+        <Car setCarPosition={setCarPosition} gameOver={gameOver} />
 
-      {isPlaying && (
-        <Container position={[500, 250]} anchor={0.5}>
-          <AnimatedSprite
-            animationSpeed={0.3}
-            isPlaying={isPlaying}
-            textures={frames}
-            anchor={0.5}
-            loop={false}
-            currentFrame={currentFrame}
-            onComplete={() => {
-              setCurrentFrame(0)
-              setIsPlaying(false)
-            }}
-          />
-        </Container>
-      )}
+        {isPlaying && (
+          <Container position={[500, 250]} anchor={0.5}>
+            <AnimatedSprite
+              animationSpeed={0.3}
+              isPlaying={isPlaying}
+              textures={frames}
+              anchor={0.5}
+              loop={false}
+              currentFrame={currentFrame}
+              onComplete={() => {
+                setCurrentFrame(0)
+                setIsPlaying(false)
+              }}
+            />
+          </Container>
+        )}
+      </Container>
     </Stage>
   )
 }
