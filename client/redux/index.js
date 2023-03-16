@@ -51,11 +51,10 @@ if (typeof ENABLE_SOCKETS !== 'undefined' && ENABLE_SOCKETS === 'true') {
       })
     })
 
-    // eslint-disable-next-line no-unused-vars
     socket.on('newEnemy', (data) => {
       const enemy = {
         isActive: true,
-        direction: 'center',
+        direction: data,
         x: 0,
         y: 0
       }
