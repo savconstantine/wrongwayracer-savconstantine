@@ -47,6 +47,12 @@ const Enemy = ({ updateEnemy, enemy, gameOver }) => {
       sprite.vscale = initVscale
       sprite.vspeed = initVspeed
       sprite.scale.set(0)
+      updateEnemy({
+        isActive: false,
+        direction: '',
+        x: 0,
+        y: 0
+      })
     }
 
     if (!enemy.isActive) {
