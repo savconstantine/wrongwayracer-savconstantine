@@ -39,53 +39,54 @@ const Enemy = ({ updateEnemy, enemy, gameOver }) => {
   }
 
   function update() {
-    if (enemy.isActive) {
-      const sprite = spriteRef.current
-      if (gameOver) {
-        if (sprite.alpha > 0) sprite.alpha -= 0.05
+    const sprite = spriteRef.current
 
-        return
-      }
-      if (sprite.alpha < 1) sprite.alpha += 0.05
-      if (enemy.direction === 'left') {
-        setTexture('left')
-        sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed)
-        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
-      } else if (enemy.direction === 'right') {
-        setTexture('right')
-        sprite.x += direction.x * (sprite.y < 450 ? speed / 2 : speed)
-        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
-      } else if (enemy.direction === 'center') {
-        setTexture('center')
-        sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
-      }
+    const resetSprite = () => {
+      sprite.x = initX
+      sprite.y = initY
+      sprite.vscale = initVscale
+      sprite.vspeed = initVspeed
+      sprite.scale.set(0)
+    }
 
-      sprite.vscale = sprite.vscale >= 0.6 ? 0.6 : sprite.vscale + 0.01
+    if (!enemy.isActive) {
+      resetSprite()
+      return
+    }
 
-      sprite.scale.set(sprite.vscale)
-      sprite.vspeed += sprite.vspeed * 0.03
+    if (gameOver) {
+      if (sprite.alpha > 0) sprite.alpha -= 0.05
+      return
+    }
+    if (sprite.alpha < 1) sprite.alpha += 0.05
+    if (enemy.direction === 'left') {
+      setTexture('left')
+      sprite.x -= direction.x * (sprite.y < 450 ? speed / 2 : speed)
+      sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
+    } else if (enemy.direction === 'right') {
+      setTexture('right')
+      sprite.x += direction.x * (sprite.y < 450 ? speed / 2 : speed)
+      sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
+    } else if (enemy.direction === 'center') {
+      setTexture('center')
+      sprite.y += direction.y * (sprite.y < 450 ? speed / 2 : speed)
+    }
 
-      updateEnemy({
-        isActive: true,
-        direction: enemy.direction,
-        x: sprite.x,
-        y: sprite.y
-      })
+    sprite.vscale = sprite.vscale >= 0.6 ? 0.6 : sprite.vscale + 0.01
 
-      if (sprite.y > 900) {
-        // Reset the position of the sprite to the center
-        sprite.x = initX
-        sprite.y = initY
-        sprite.vscale = initVscale
-        sprite.vspeed = initVspeed
-        sprite.scale.set(0)
-        updateEnemy({
-          isActive: false,
-          direction: '',
-          x: 0,
-          y: 0
-        })
-      }
+    sprite.scale.set(sprite.vscale)
+    sprite.vspeed += sprite.vspeed * 0.03
+
+    updateEnemy({
+      isActive: true,
+      direction: enemy.direction,
+      x: sprite.x,
+      y: sprite.y
+    })
+
+    if (sprite.y > 900) {
+      // Reset the position of the sprite to the center
+      resetSprite()
     }
   }
 

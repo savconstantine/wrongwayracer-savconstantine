@@ -1,6 +1,7 @@
 const SET_PLAYERS = 'SET_PLAYERS'
 const SET_CHAT = 'SET_CHAT'
 const SET_ENEMY = 'SET_ENEMY'
+const SET_GAME_OVER = 'SET_GAME_OVER'
 
 const initialState = {
   records: [
@@ -37,6 +38,7 @@ const initialState = {
   ],
   players: [],
   chat: [],
+  gameOver: false,
   enemy: {
     isActive: false,
     direction: '',
@@ -51,8 +53,12 @@ export default (state = initialState, action = {}) => {
       return { ...state, players: action.payload }
     case SET_CHAT:
       return { ...state, chat: [...state.chat, action.payload] }
-    case SET_ENEMY:
+    case SET_ENEMY: {
+      if (state.gameOver === true) return state
       return { ...state, enemy: action.payload }
+    }
+    case SET_GAME_OVER:
+      return { ...state, gameOver: action.payload }
     default:
       return state
   }
@@ -81,6 +87,15 @@ export const setEnemy = (enemy) => {
     dispatch({
       type: SET_ENEMY,
       payload: enemy
+    })
+  }
+}
+
+export const setGameOverStore = (gameOver) => {
+  return (dispatch) => {
+    dispatch({
+      type: SET_GAME_OVER,
+      payload: gameOver
     })
   }
 }
