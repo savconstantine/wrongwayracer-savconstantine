@@ -38,7 +38,7 @@ const GameSceneView = () => {
   }
 
   useEffect(() => {
-    if (enemy.direction === carPosition && enemy.y > 500 && enemy.y < 650) {
+    if (enemy.isActive && enemy.direction === carPosition && enemy.y > 500 && enemy.y < 650) {
       switch (carPosition) {
         case 'left':
           setExplosionPositionX(centerPositionExplosion - 250)
