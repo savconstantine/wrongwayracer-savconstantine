@@ -10,7 +10,7 @@ import Enemy from './enemy'
 import SideroadLeft from './sideroad-left'
 import SideroadRight from './sideroad-right'
 
-import { setEnemy } from '../../redux/reducers/data'
+import { setEnemy, setGameOverStore } from '../../redux/reducers/data'
 
 const ticker = new PIXI.Ticker()
 ticker.maxFPS = 40
@@ -37,6 +37,10 @@ const GameSceneView = () => {
     dispatch(setEnemy(data))
   }
 
+  const updateGameOverStore = (status) => {
+    dispatch(setGameOverStore(status))
+  }
+
   useEffect(() => {
     if (enemy.isActive && enemy.direction === carPosition && enemy.y > 500 && enemy.y < 650) {
       switch (carPosition) {
@@ -54,7 +58,9 @@ const GameSceneView = () => {
       }
       setIsPlaying(true)
       setGameOver(true)
+      updateGameOverStore(true)
       setTimeout(() => {
+        updateGameOverStore(false)
         updateEnemy({ isActive: false, direction: 'center', x: 0, y: 0 })
         setGameOver(false)
         setIsPlaying(false)
